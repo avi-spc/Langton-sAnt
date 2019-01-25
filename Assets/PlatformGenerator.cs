@@ -11,10 +11,14 @@ public class PlatformGenerator : MonoBehaviour
 
     public GameObject platformUnit;
 
+     void Awake() {
+        GeneratePlatform();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        GeneratePlatform();
+        
     }
 
     // Update is called once per frame
@@ -37,10 +41,10 @@ public class PlatformGenerator : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
-    {
-        for (int i = 0; i < vertices.Length; i++) {
-            Gizmos.DrawSphere(vertices[i], 0.1f);
-        }
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    for (int i = 0; i < vertices.Length; i++) {
+    //        Gizmos.DrawSphere(vertices[i], 0.1f);
+    //    }
+    //}
 }
