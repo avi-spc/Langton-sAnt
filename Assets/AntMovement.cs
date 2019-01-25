@@ -12,8 +12,7 @@ public class AntMovement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        colors = new Color[] { Color.white, Color.red };
-        directions = new string[] { "Left", "Right" };
+        gameObject.GetComponent<BoxCollider>().enabled = false;
     }
 
     // Update is called once per frame
@@ -52,12 +51,7 @@ public class AntMovement : MonoBehaviour
                 else if (directions[nextState].Equals("Right"))
                     transform.Rotate(new Vector3(0, 90, 0));
                 transform.Translate(0, 0, 1);
-                Debug.Log(nextState);
             }
-
-            
-
-
 
             //if (r == colors[colorState].r && g == colors[colorState].g && b == colors[colorState].b && a == colors[colorState].a)
             //{
@@ -78,4 +72,8 @@ public class AntMovement : MonoBehaviour
             //Debug.Log(unitColor);
         }
     }
+
+    public void EnableCollider() {
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+    } 
 }

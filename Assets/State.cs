@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class State : MonoBehaviour
 {
-    public int numberOfColors;
+    public int numberOfStates;
 
-    public GameObject stateCombo;
+    public GameObject stateCombo, ant;
 
     public GameObject[] stateCombos;
 
@@ -17,17 +17,25 @@ public class State : MonoBehaviour
         public string direction;
     }
 
+    public Button enableCollider;
+
     public stateCombination[] states;
 
     public Dropdown directionDropdown, colorDropdown;
 
-    private void Awake() {
-        stateCombos = new GameObject[numberOfColors];
-        for (int i = 0; i < stateCombos.Length; i++) {
-            stateCombos[i] = Instantiate(stateCombo, transform.position, Quaternion.identity);
-            stateCombos[i].transform.SetParent(GameObject.FindGameObjectWithTag("StateHolder").transform);
-        }
-        states = new stateCombination[stateCombos.Length];
+    public InputField numOfStates;
+
+    public Color[] colorArray;
+    public string[] directionArray;
+
+    private void Awake() {       
+
+    }
+
+     void Start()
+    {
+        ant = GameObject.FindGameObjectWithTag("Ant");
+        enableCollider.onClick.AddListener(ant.GetComponent<AntMovement>().EnableCollider);
     }
 
     public void SetConfig() {
@@ -37,13 +45,58 @@ public class State : MonoBehaviour
             states[i].direction = directionDropdown.options[directionDropdown.value].text;
             states[i].color = colorDropdown.options[colorDropdown.value].text;
         }
+        Debug.Log(states.Length);
 
+        ant.GetComponent<AntMovement>().colors = SetColorArray();
+        ant.GetComponent<AntMovement>().directions = SetDirectionArray();
+
+    }
+
+    public void InitialSetup() {
+        numberOfStates = int.Parse(numOfStates.text);
+        stateCombos = new GameObject[numberOfStates];
         for (int i = 0; i < stateCombos.Length; i++)
         {
-            Debug.Log(states[i].direction + states[i].color);
+            stateCombos[i] = Instantiate(stateCombo, transform.position, Quaternion.identity);
+            stateCombos[i].transform.SetParent(GameObject.FindGameObjectWithTag("StateHolder").transform);
         }
-        //states[0].color = colorDropdown.options[0].text;
-        //states[0].direction = directionDropdown.options[0].text;
-        //Debug.Log(states[0].color);
+        states = new stateCombination[stateCombos.Length];
+        colorArray = new Color[stateCombos.Length];
+        directionArray = new string[stateCombos.Length];
+    }
+
+    public Color[] SetColorArray() {
+        for (int i = 0; i < stateCombos.Length; i++) {
+            switch (states[i].color) {
+                case "White" :
+                    colorArray[i] = Color.white;
+                    break;
+                case "Red":
+                    colorArray[i] = Color.red;
+                    break;
+                case "Green":
+                    colorArray[i] = Color.green;
+                    break;
+                default:
+                    break;
+            }        
+        }
+        return colorArray;
+    }
+
+    public string[] SetDirectionArray() {
+        for (int i = 0; i < states.Length; i++) {
+            switch (states[i].direction) {
+                case "Left":
+                    directionArray[i] = "Left";
+                    break;
+                case "Right":
+                    directionArray[i] = "Right";
+                    break;
+                default:
+                    break;
+            }
+        }
+        return directionArray;
     }
 }
