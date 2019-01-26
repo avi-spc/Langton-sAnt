@@ -7,6 +7,7 @@ public class AntMovement : MonoBehaviour
     Color unitColor;
     public Color[] colors;
     public string[] directions;
+    public int steps;
 
     int colorState = 0;
     // Start is called before the first frame update
@@ -50,8 +51,10 @@ public class AntMovement : MonoBehaviour
                     transform.Rotate(new Vector3(0, -90, 0));
                 else if (directions[nextState].Equals("Right"))
                     transform.Rotate(new Vector3(0, 90, 0));
-                transform.Translate(0, 0, 1);
+                transform.Translate(new Vector3(0, 0, 1));
             }
+
+            steps++;
 
             //if (r == colors[colorState].r && g == colors[colorState].g && b == colors[colorState].b && a == colors[colorState].a)
             //{

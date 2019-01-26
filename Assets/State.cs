@@ -23,6 +23,8 @@ public class State : MonoBehaviour
 
     public Dropdown directionDropdown, colorDropdown;
 
+    public Text steps;
+
     public InputField numOfStates;
 
     public Color[] colorArray;
@@ -32,10 +34,13 @@ public class State : MonoBehaviour
 
     }
 
-     void Start()
-    {
+    void Start() {
         ant = GameObject.FindGameObjectWithTag("Ant");
         enableCollider.onClick.AddListener(ant.GetComponent<AntMovement>().EnableCollider);
+    }
+
+    private void Update() {
+        steps.text = ant.GetComponent<AntMovement>().steps.ToString();
     }
 
     public void SetConfig() {
